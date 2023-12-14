@@ -1,0 +1,10 @@
+#!/sbin/openrc-run
+pidfile="/run/jupiter_fan_control.pid"
+command="/usr/share/jupiter-fan-control/fancontrol.py"
+command_args="--run"
+command_background=1
+
+stop() {
+  /usr/share/jupiter-fan-control/fancontrol.py --stop
+  rm $pidfile
+}
