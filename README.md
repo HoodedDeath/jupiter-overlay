@@ -6,7 +6,7 @@ A simple repo to add Jupiter kernel module and fan control packages to a Gentoo 
 Currently contains two packages: `sys-kernel/jupiter-dkms` providing the DKMS module for the Jupiter ACPI platform drivers, and `sys-power/jupiter-fan-control` providing a service (OpenRC or SystemD) to control the fan.
 
 ## Adding to Gentoo
-Copy `jupiter-overlay.conf` to `/etc/portage/repos.conf/` and sync.
+Either copy `jupiter-overlay.conf` to `/etc/portage/repos.conf/` or run `eselect repository add jupiter git https://github.com/HoodedDeath/jupiter-overlay.git` and sync.
 
 ## Jupiter Fan Control
 Available USE: `openrc systemd`
