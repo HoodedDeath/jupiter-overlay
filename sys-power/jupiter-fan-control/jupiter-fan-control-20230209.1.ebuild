@@ -1,12 +1,12 @@
 EAPI=8
 DESCRIPTION="Background service for adding fan control for the Jupiter (SteamDeck) Platform"
 HOMEPAGE="https://github.com/firlin123/jupiter-fan-control"
-SRC_URI="https://github.com/firlin123/jupiter-fan-control/archive/refs/tags/20230209.1.tar.gz"
+SRC_URI="https://github.com/firlin123/${PN}/archive/refs/tags/${PV}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="openrc systemd autoenable-service"
-REQUIRED_USE="openrc? ( !systemd ) systemd? ( !openrc ) autoenable-service? ( ^^ ( openrc systemd ) )"
+IUSE="openrc systemd"
+REQUIRED_USE="openrc? ( !systemd ) systemd? ( !openrc )"
 RDEPEND="openrc? ( sys-apps/openrc ) systemd? ( sys-apps/systemd ) >=dev-python/pyyaml-6.0.1-r1 >=dev-lang/python-3.12.0_p1"
 DEPEND="${RDEPEND}"
 
@@ -29,13 +29,11 @@ src_install() {
 }
 
 pkg_postinst() {
-  if use autoenable-service ; then
-    if use openrc ; then rc-update add jupiter-fan-control default; fi
-    if use systemd ; then systemctl enable jupiter-fan-control.service; fi
-  fi
+  use openrc && elog "The service has been installed as 'jupiter-fan-control' and should be started / added to default runlevel."
+  use systemd && elog "The service has been installed as 'jupiter-fan-control.service' and should be started / enabled."
 }
 
-pkg_prerm() {
-  if use openrc ; then rc-update del jupiter-fan-control default; fi
-  if use systemd ; then systemctl disable jupiter-fan-control.service; fi
+pkg_postrm() {
+  use openrc && elog "The service 'jupiter-fan-control' has been uninstalled. If it was added to a runlevel, that link is now broken and should be removed."
+  use systemd && elog "The service 'jupiter-fan-control.service' has been uninstalled. If it was enabled, that link is now broken and should be removed."
 }
