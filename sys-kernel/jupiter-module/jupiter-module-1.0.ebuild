@@ -11,7 +11,7 @@ inherit linux-mod-r1
 
 src_compile() {
 	local modlist=( jupiter )
-	local modargs=( KDIR="${KV_OUT_DIR}" KVER="${KV_FULL}" )
+	local modargs=( KERNEL_DIR="${KV_OUT_DIR}" )
 	linux-mod-r1_src_compile
 }
 
